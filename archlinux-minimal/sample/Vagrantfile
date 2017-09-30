@@ -1,0 +1,6 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "archlinux-minimal"
+  config.vm.provision :shell, path: "provision/locale.sh"
+  config.vm.provision :shell, path: "provision/timezone.sh"
+  config.vm.provision :shell, path: "provision/pacman.sh"
+end
