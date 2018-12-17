@@ -27,7 +27,7 @@ sed -i 's/^GRUB_TIMEOUT=.*$/GRUB_TIMEOUT=0/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # https://wiki.archlinux.org/index.php/Users_and_groups#Example_adding_a_user
-useradd -m -U vagrant
+useradd --create-home vagrant
 echo vagrant:vagrant | chpasswd
 
 # https://wiki.archlinux.org/index.php/Sudo#Configure_sudo_using_drop-in_files_in_.2Fetc.2Fsudoers.d

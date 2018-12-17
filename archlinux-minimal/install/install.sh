@@ -24,9 +24,11 @@ mkfs.ext4 -q "${device}2"
 mount "${device}2" /mnt && mkdir /mnt/boot
 mount "${device}1" /mnt/boot
 
-# https://wiki.archlinux.org/index.php/Installation_guide#Install_the_base_packages
+# https://wiki.archlinux.org/index.php/Installation_guide#Select_the_mirrors
 echo "Server = ${mirror}/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
+
+# https://wiki.archlinux.org/index.php/Installation_guide#Install_the_base_packages
 pacstrap /mnt base grub sudo openssh
 
 # https://wiki.archlinux.org/index.php/Installation_guide#Fstab
-genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab

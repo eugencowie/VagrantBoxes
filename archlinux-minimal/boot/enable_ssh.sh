@@ -4,7 +4,7 @@ set -e
 set -x
 
 # https://wiki.archlinux.org/index.php/Users_and_groups#Example_adding_a_user
-useradd -mU vagrant
+useradd --create-home vagrant
 echo vagrant:vagrant | chpasswd
 
 # https://wiki.archlinux.org/index.php/Sudo#Configure_sudo_using_drop-in_files_in_.2Fetc.2Fsudoers.d

@@ -14,7 +14,7 @@
         "http_directory": "boot",
         "boot_wait": "5s",
         "boot_command": [
-            "<enter><wait10><wait10>",
+            "<enter><wait10><wait10><wait10><wait10>",
             "curl -s http://{{.HTTPIP}}:{{.HTTPPort}}/enable_ssh.sh | bash<enter>"
         ],
         "ssh_timeout": "1m",
@@ -31,7 +31,7 @@
     }, {
         "type": "shell",
         "script": "install/install-chroot.sh",
-        "execute_command": "sudo cp {{.Path}} /mnt/install-chroot.sh; sudo arch-chroot /mnt /install-chroot.sh; sudo rm /mnt/install-chroot.sh; sudo systemctl reboot"
+        "execute_command": "sudo cp {{.Path}} /mnt/install-chroot.sh && sudo arch-chroot /mnt /install-chroot.sh && sudo rm /mnt/install-chroot.sh && sudo systemctl reboot"
     }, {
         "type": "shell",
         "pause_before": "10s",
