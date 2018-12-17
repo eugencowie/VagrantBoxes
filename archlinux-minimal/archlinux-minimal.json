@@ -1,7 +1,8 @@
 {
     "variables": {
         "mirror": "http://mirrors.kernel.org/archlinux",
-        "version": "2018.12.01"
+        "version": "2018.12.01",
+        "wait": "60s"
     },
 
     "builders": [{
@@ -12,9 +13,8 @@
         "iso_checksum_url": "{{user `mirror`}}/iso/{{user `version`}}/sha1sums.txt",
         "iso_checksum_type": "sha1",
         "http_directory": "bootstrap",
-        "boot_wait": "5s",
         "boot_command": [
-            "<enter><wait10><wait10><wait10><wait10>",
+            "<enter><wait{{user `wait`}}>",
             "curl -s http://{{.HTTPIP}}:{{.HTTPPort}}/ssh.sh | bash<enter>"
         ],
         "ssh_timeout": "1m",
