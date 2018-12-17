@@ -37,10 +37,14 @@
     }, {
         "type": "shell",
         "scripts": [
-            "install/setup.sh",
-            "provision/virtualbox.sh",
-            "provision/ssh.sh",
-            "provision/pacman.sh"
+            "provision/10-timezone.sh",
+            "provision/20-locale.sh",
+            "provision/30-hostname.sh",
+            "provision/40-network.sh",
+            "provision/50-pacman.sh",
+            "provision/60-bootloader.sh",
+            "provision/70-ssh.sh",
+            "provision/80-virtualbox.sh"
         ],
         "execute_command": "cp '{{.Path}}' /mnt/tmp.sh && arch-chroot /mnt /tmp.sh && rm /mnt/tmp.sh"
     }],
