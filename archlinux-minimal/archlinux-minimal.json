@@ -11,11 +11,11 @@
         "iso_url": "{{user `mirror`}}/iso/{{user `version`}}/archlinux-{{user `version`}}-x86_64.iso",
         "iso_checksum_url": "{{user `mirror`}}/iso/{{user `version`}}/sha1sums.txt",
         "iso_checksum_type": "sha1",
-        "http_directory": "boot",
+        "http_directory": "bootstrap",
         "boot_wait": "5s",
         "boot_command": [
             "<enter><wait10><wait10><wait10><wait10>",
-            "curl -s http://{{.HTTPIP}}:{{.HTTPPort}}/enable_ssh.sh | bash<enter>"
+            "curl -s http://{{.HTTPIP}}:{{.HTTPPort}}/ssh.sh | bash<enter>"
         ],
         "ssh_timeout": "1m",
         "ssh_username": "vagrant",
@@ -30,8 +30,8 @@
         "environment_vars": ["mirror={{user `mirror`}}"]
     }, {
         "type": "shell",
-        "script": "install/install-chroot.sh",
-        "execute_command": "sudo cp {{.Path}} /mnt/install-chroot.sh && sudo arch-chroot /mnt /install-chroot.sh && sudo rm /mnt/install-chroot.sh && sudo systemctl reboot"
+        "script": "install/setup.sh",
+        "execute_command": "sudo cp {{.Path}} /mnt/setup.sh && sudo arch-chroot /mnt /setup.sh && sudo rm /mnt/setup.sh && sudo systemctl reboot"
     }, {
         "type": "shell",
         "pause_before": "10s",
