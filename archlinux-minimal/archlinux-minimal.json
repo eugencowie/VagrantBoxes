@@ -12,34 +12,30 @@
         "iso_url": "{{user `mirror`}}/iso/{{user `version`}}/archlinux-{{user `version`}}-x86_64.iso",
         "iso_checksum_url": "{{user `mirror`}}/iso/{{user `version`}}/sha1sums.txt",
         "iso_checksum_type": "sha1",
-        "http_directory": "bootstrap",
         "boot_command": [
             "<enter><wait{{user `wait`}}>",
-            "curl -s http://{{.HTTPIP}}:{{.HTTPPort}}/ssh.sh | bash<enter>"
+            "echo PermitEmptyPasswords yes >> /etc/ssh/sshd_config<enter><wait>",
+            "systemctl start sshd<enter><wait>"
         ],
         "ssh_timeout": "1m",
-        "ssh_username": "vagrant",
-        "ssh_password": "vagrant",
-        "shutdown_command": "sudo systemctl poweroff"
+        "ssh_username": "root",
+        "ssh_password": "",
+        "shutdown_command": "systemctl poweroff"
     }],
 
     "provisioners": [{
         "type": "shell",
         "script": "install/install.sh",
-        "execute_command": "sudo sh -c '{{.Vars}} {{.Path}}'",
         "environment_vars": ["mirror={{user `mirror`}}"]
     }, {
         "type": "shell",
-        "script": "install/setup.sh",
-        "execute_command": "sudo cp {{.Path}} /mnt/setup.sh && sudo arch-chroot /mnt /setup.sh && sudo rm /mnt/setup.sh && sudo systemctl reboot"
-    }, {
-        "type": "shell",
-        "pause_before": "10s",
         "scripts": [
+            "install/setup.sh",
             "provision/virtualbox.sh",
             "provision/ssh.sh",
             "provision/pacman.sh"
-        ]
+        ],
+        "execute_command": "cp '{{.Path}}' /mnt/tmp.sh && arch-chroot /mnt /tmp.sh && rm /mnt/tmp.sh"
     }],
 
     "post-processors": [{
