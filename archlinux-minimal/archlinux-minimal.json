@@ -25,7 +25,14 @@
 
     "provisioners": [{
         "type": "shell",
-        "script": "install/install.sh",
+        "scripts": [
+            "install/10-partition.sh",
+            "install/20-format.sh",
+            "install/30-mount.sh",
+            "install/40-mirrors.sh",
+            "install/50-install.sh",
+            "install/60-fstab.sh"
+        ],
         "environment_vars": ["mirror={{user `mirror`}}"]
     }, {
         "type": "shell",
