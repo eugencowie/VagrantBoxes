@@ -4,7 +4,7 @@ set -e
 set -x
 
 # https://wiki.archlinux.org/index.php/Swap#Swap_file_creation
-fallocate -l 512M /swapfile
+fallocate -l 2048M /swapfile
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile

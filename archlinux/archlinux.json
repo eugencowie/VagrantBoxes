@@ -39,18 +39,19 @@
         "scripts": [
             "provision/10-timezone.sh",
             "provision/20-locale.sh",
-            "provision/30-hostname.sh",
-            "provision/40-network.sh",
-            "provision/50-pacman.sh",
-            "provision/60-bootloader.sh",
+            "provision/30-network.sh",
+            "provision/40-bootloader.sh",
+            "provision/50-user.sh",
+            "provision/60-sudo.sh",
             "provision/70-ssh.sh",
-            "provision/80-virtualbox.sh"
+            "provision/80-virtualbox.sh",
+            "provision/90-pacman.sh"
         ],
         "execute_command": "cp '{{.Path}}' /mnt/tmp.sh && arch-chroot /mnt /tmp.sh && rm /mnt/tmp.sh"
     }],
 
     "post-processors": [{
         "type": "vagrant",
-        "output": "archlinux-minimal-{{.Provider}}.box"
+        "output": "archlinux-{{.Provider}}.box"
     }]
 }
