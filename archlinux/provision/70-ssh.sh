@@ -11,7 +11,9 @@ systemctl --quiet enable sshd
 sed -i "/#UseDNS no/s/^#//" /etc/ssh/sshd_config
 
 # https://www.vagrantup.com/docs/boxes/base.html#quot-vagrant-quot-user
-su - vagrant -c 'mkdir -p ~/.ssh'
-su - vagrant -c 'curl -fsSLo ~/.ssh/authorized_keys "https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant.pub"'
-su - vagrant -c 'chmod 600 ~/.ssh/authorized_keys'
-su - vagrant -c 'chmod 700 ~/.ssh/'
+mkdir -p /home/vagrant/.ssh
+curl -fsSLo /home/vagrant/.ssh/authorized_keys "https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant.pub"
+chown vagrant:vagrant /home/vagrant/.ssh/authorized_keys
+chown vagrant:vagrant /home/vagrant/.ssh/
+chmod 600 /home/vagrant/.ssh/authorized_keys
+chmod 700 /home/vagrant/.ssh/

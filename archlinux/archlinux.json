@@ -12,6 +12,7 @@
         "iso_url": "{{user `mirror`}}/iso/{{user `version`}}/archlinux-{{user `version`}}-x86_64.iso",
         "iso_checksum_url": "{{user `mirror`}}/iso/{{user `version`}}/sha1sums.txt",
         "iso_checksum_type": "sha1",
+        "headless": true,
         "boot_command": [
             "<enter><wait{{user `wait`}}>",
             "echo PermitEmptyPasswords yes >> /etc/ssh/sshd_config<enter><wait>",

@@ -1,13 +1,9 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "archlinux"
-  config.vm.provider "virtualbox" do |v|
-    v.memory = 2048
-    v.gui = true
-  end
   config.vm.provision "shell", path: "provision/10-timezone.sh"
   config.vm.provision "shell", path: "provision/20-locale.sh"
   config.vm.provision "shell", path: "provision/30-pacman.sh"
   config.vm.provision "shell", path: "provision/40-swap.sh"
-  config.vm.provision "shell", privileged: false, path: "user/10-bash.sh"
-  config.vm.provision "file", source: "user/home/.bashrc.d/gruvbox.bashrc", destination: ".bashrc.d/gruvbox.bashrc"
+  config.vm.provision "shell", privileged: false, path: "user/10-fish.sh"
+  config.vm.provision "shell", privileged: false, inline: "if [ -e /vagrant/user/files ]; then cp -r /vagrant/user/files/. ~/; fi"
 end
