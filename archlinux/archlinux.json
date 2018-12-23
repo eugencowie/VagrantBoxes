@@ -2,7 +2,8 @@
     "variables": {
         "mirror": "http://mirrors.kernel.org/archlinux",
         "version": "2018.12.01",
-        "wait": "60s"
+        "wait": "60s",
+        "headless": "false"
     },
 
     "builders": [{
@@ -12,7 +13,7 @@
         "iso_url": "{{user `mirror`}}/iso/{{user `version`}}/archlinux-{{user `version`}}-x86_64.iso",
         "iso_checksum_url": "{{user `mirror`}}/iso/{{user `version`}}/sha1sums.txt",
         "iso_checksum_type": "sha1",
-        "headless": true,
+        "headless": "{{user `headless`}}",
         "boot_command": [
             "<enter><wait{{user `wait`}}>",
             "echo PermitEmptyPasswords yes >> /etc/ssh/sshd_config<enter><wait>",
@@ -38,15 +39,14 @@
     }, {
         "type": "shell",
         "scripts": [
-            "provision/10-timezone.sh",
-            "provision/20-locale.sh",
-            "provision/30-network.sh",
-            "provision/40-bootloader.sh",
-            "provision/50-user.sh",
-            "provision/60-sudo.sh",
-            "provision/70-ssh.sh",
-            "provision/80-virtualbox.sh",
-            "provision/90-pacman.sh"
+            "provision/10-locale.sh",
+            "provision/20-network.sh",
+            "provision/30-bootloader.sh",
+            "provision/40-user.sh",
+            "provision/50-sudo.sh",
+            "provision/60-ssh.sh",
+            "provision/70-virtualbox.sh",
+            "provision/80-pacman.sh"
         ],
         "execute_command": "cp '{{.Path}}' /mnt/tmp.sh && arch-chroot /mnt /tmp.sh && rm /mnt/tmp.sh"
     }],
