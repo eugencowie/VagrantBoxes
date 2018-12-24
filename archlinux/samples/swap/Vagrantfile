@@ -1,0 +1,4 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "archlinux"
+  config.vm.provision "shell", path: "provision/10-swap.sh"
+end
