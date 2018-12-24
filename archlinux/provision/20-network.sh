@@ -1,5 +1,6 @@
 #!/bin/bash
 
+[[ $verbose != true ]] && quiet="--quiet"
 set -e
 set -x
 
@@ -10,4 +11,4 @@ echo archlinux > /etc/hostname
 ln -sf /dev/null /etc/udev/rules.d/80-net-setup-link.rules
 
 # https://wiki.archlinux.org/index.php/Dhcpcd#Running
-systemctl --quiet enable dhcpcd@eth0
+systemctl $quiet enable dhcpcd@eth0
