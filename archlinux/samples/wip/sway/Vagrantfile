@@ -1,0 +1,5 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "archlinux"
+  config.vm.provider "virtualbox" do |v| v.gui = true end
+  config.vm.provision "shell", privileged: false, path: "user/provision/10-sway.sh"
+end
