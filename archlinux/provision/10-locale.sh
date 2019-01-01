@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[[ $verbose != true ]] && devnull=/dev/null || devnull=/dev/stdout
+[[ $quiet == true ]] && devnull=/dev/null || devnull=/dev/stdout
 set -e
 set -x
 

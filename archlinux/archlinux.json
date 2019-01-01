@@ -1,10 +1,10 @@
 {
     "variables": {
         "mirror": "http://mirrors.kernel.org/archlinux",
-        "version": "2018.12.01",
-        "wait": "60s",
+        "version": "{{isotime \"2006.01\"}}.01",
+        "boot": "60s",
         "headless": "false",
-        "verbose": "true"
+        "quiet": "false"
     },
 
     "builders": [{
@@ -16,7 +16,7 @@
         "iso_checksum_type": "sha1",
         "headless": "{{user `headless`}}",
         "boot_command": [
-            "<enter><wait{{user `wait`}}>",
+            "<enter><wait{{user `boot`}}>",
             "echo PermitEmptyPasswords yes >> /etc/ssh/sshd_config<enter><wait>",
             "systemctl start sshd<enter><wait>"
         ],
@@ -36,7 +36,7 @@
             "install/50-install.sh",
             "install/60-fstab.sh"
         ],
-        "environment_vars": ["verbose={{user `verbose`}}", "mirror={{user `mirror`}}"]
+        "environment_vars": ["quiet={{user `quiet`}}", "mirror={{user `mirror`}}"]
     }, {
         "type": "shell",
         "scripts": [
@@ -49,7 +49,7 @@
             "provision/70-virtualbox.sh",
             "provision/80-pacman.sh"
         ],
-        "environment_vars": ["verbose={{user `verbose`}}"],
+        "environment_vars": ["quiet={{user `quiet`}}"],
         "execute_command": "cp '{{.Path}}' /mnt/tmp.sh && {{.Vars}} arch-chroot /mnt /tmp.sh && rm /mnt/tmp.sh"
     }],
 

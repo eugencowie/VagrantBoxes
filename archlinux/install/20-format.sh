@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[[ $verbose != true ]] && q="-q"
+[[ $quiet == true ]] && q="-q"
 set -e
 set -x
 

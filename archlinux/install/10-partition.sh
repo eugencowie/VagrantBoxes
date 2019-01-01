@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[[ $verbose != true ]] && script="--script"
+[[ $quiet == true ]] && script="--script"
 set -e
 set -x
 
