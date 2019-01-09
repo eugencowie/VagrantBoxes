@@ -42,12 +42,13 @@
         "scripts": [
             "provision/10-locale.sh",
             "provision/20-network.sh",
-            "provision/30-bootloader.sh",
-            "provision/40-user.sh",
-            "provision/50-sudo.sh",
-            "provision/60-ssh.sh",
-            "provision/70-virtualbox.sh",
-            "provision/80-pacman.sh"
+            "provision/30-network.sh",
+            "provision/40-bootloader.sh",
+            "provision/50-user.sh",
+            "provision/60-sudo.sh",
+            "provision/70-ssh.sh",
+            "provision/80-virtualbox.sh",
+            "provision/90-pacman.sh"
         ],
         "environment_vars": ["quiet={{user `quiet`}}"],
         "execute_command": "cp '{{.Path}}' /mnt/tmp.sh && {{.Vars}} arch-chroot /mnt /tmp.sh && rm /mnt/tmp.sh"
