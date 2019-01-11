@@ -1,7 +1,4 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "archlinux"
-  env = { "quiet" => ENV["quiet"] }
-  config.vm.provision "shell", env: env, path: "provision/10-timezone.sh"
-  config.vm.provision "shell", env: env, path: "provision/20-locale.sh"
-  config.vm.provision "shell", env: env, path: "provision/30-pacman.sh"
+  config.vm.provision "shell", path: "provision/locale.sh"
 end
