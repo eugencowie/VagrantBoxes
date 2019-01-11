@@ -2,9 +2,7 @@
     "variables": {
         "mirror": "http://mirrors.kernel.org/archlinux",
         "version": "{{isotime \"2006.01\"}}.01",
-        "boot": "60s",
-        "headless": "false",
-        "quiet": "false"
+        "boot": "60s"
     },
 
     "builders": [{
@@ -14,7 +12,7 @@
         "iso_url": "{{user `mirror`}}/iso/{{user `version`}}/archlinux-{{user `version`}}-x86_64.iso",
         "iso_checksum_url": "{{user `mirror`}}/iso/{{user `version`}}/sha1sums.txt",
         "iso_checksum_type": "sha1",
-        "headless": "{{user `headless`}}",
+        "headless": "true",
         "boot_command": [
             "<enter><wait{{user `boot`}}>",
             "echo PermitEmptyPasswords yes >> /etc/ssh/sshd_config<enter><wait>",
@@ -28,30 +26,17 @@
 
     "provisioners": [{
         "type": "shell",
-        "scripts": [
-            "install/10-partition.sh",
-            "install/20-format.sh",
-            "install/30-mount.sh",
-            "install/40-mirrors.sh",
-            "install/50-install.sh",
-            "install/60-fstab.sh"
-        ],
-        "environment_vars": ["quiet={{user `quiet`}}", "mirror={{user `mirror`}}"]
+        "script": "install/base.sh",
+        "environment_vars": "mirror={{user `mirror`}}"
     }, {
         "type": "shell",
         "scripts": [
-            "provision/10-locale.sh",
-            "provision/20-network.sh",
-            "provision/30-network.sh",
-            "provision/40-bootloader.sh",
-            "provision/50-user.sh",
-            "provision/60-sudo.sh",
-            "provision/70-ssh.sh",
-            "provision/80-virtualbox.sh",
-            "provision/90-pacman.sh"
+            "install/grub.sh",
+            "install/vagrant.sh",
+            "install/virtualbox.sh",
+            "install/pacman.sh"
         ],
-        "environment_vars": ["quiet={{user `quiet`}}"],
-        "execute_command": "cp '{{.Path}}' /mnt/tmp.sh && {{.Vars}} arch-chroot /mnt /tmp.sh && rm /mnt/tmp.sh"
+        "execute_command": "cp {{.Path}} /mnt/tmp.sh && {{.Vars}} arch-chroot /mnt /tmp.sh && rm /mnt/tmp.sh"
     }],
 
     "post-processors": [{
