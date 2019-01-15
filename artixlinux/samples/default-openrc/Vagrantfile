@@ -1,3 +1,3 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "artixlinux"
+  config.vm.box = "artixlinux-openrc"
 end

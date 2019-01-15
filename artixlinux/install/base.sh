@@ -10,7 +10,3 @@ echo '
 ' | sfdisk --quiet /dev/sda
 mkfs.ext4 -q /dev/sda1
 mount /dev/sda1 /mnt
-
-# https://wiki.artixlinux.org/Main/Installation#Install_base_system
-basestrap /mnt base openrc > /dev/null
-fstabgen -U /mnt >> /mnt/etc/fstab

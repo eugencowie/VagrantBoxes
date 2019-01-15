@@ -26,20 +26,24 @@
 
     "provisioners": [{
         "type": "shell",
-        "script": "install/base.sh"
+        "scripts": [
+            "install/base.sh",
+            "install/base-openrc.sh"
+        ]
     }, {
         "type": "shell",
         "scripts": [
             "install/grub.sh",
             "install/vagrant.sh",
+            "install/vagrant-openrc.sh",
             "install/virtualbox.sh",
             "install/pacman.sh"
         ],
-        "execute_command": "cp {{.Path}} /mnt/tmp.sh && {{.Vars}} artools-chroot /mnt /tmp.sh && rm /mnt/tmp.sh"
+        "execute_command": "set -o pipefail; cp {{.Path}} /mnt/tmp.sh && ({{.Vars}} artools-chroot /mnt /tmp.sh 3>&1 1>/dev/null 2>&3 | sed -u -E '/^ --> u?mount: .*/d') 1>&2 && rm /mnt/tmp.sh"
     }],
 
     "post-processors": [{
         "type": "vagrant",
-        "output": "artixlinux-{{.Provider}}.box"
+        "output": "artixlinux-openrc-{{.Provider}}.box"
     }]
 }

@@ -1,0 +1,50 @@
+{
+    "variables": {
+        "version": "runit-20180604",
+        "boot": "45s"
+    },
+
+    "builders": [{
+        "type": "virtualbox-iso",
+        "guest_os_type": "ArchLinux_64",
+        "guest_additions_mode": "disable",
+        "iso_url": "https://download.artixlinux.org/iso/artix-base-{{user `version`}}-x86_64.iso",
+        "iso_checksum_url": "https://download.artixlinux.org/iso/sha256sums",
+        "iso_checksum_type": "sha256",
+        "headless": "true",
+        "boot_command": [
+            "<down><down><enter><wait{{user `boot`}}>",
+            "root<enter><wait>artix<enter><wait>",
+            "echo PermitRootLogin yes >> /etc/ssh/sshd_config<enter><wait>",
+            "useradd -g nobody nobody<enter><wait>",
+            "ln -s /etc/runit/sv/sshd /run/runit/service/<enter><wait>"
+        ],
+        "ssh_timeout": "1m",
+        "ssh_username": "root",
+        "ssh_password": "artix",
+        "shutdown_command": "poweroff"
+    }],
+
+    "provisioners": [{
+        "type": "shell",
+        "scripts": [
+            "install/base.sh",
+            "install/base-runit.sh"
+        ]
+    }, {
+        "type": "shell",
+        "scripts": [
+            "install/grub.sh",
+            "install/vagrant.sh",
+            "install/vagrant-runit.sh",
+            "install/virtualbox.sh",
+            "install/pacman.sh"
+        ],
+        "execute_command": "set -o pipefail; cp {{.Path}} /mnt/tmp.sh && ({{.Vars}} artools-chroot /mnt /tmp.sh 3>&1 1>/dev/null 2>&3 | sed -u -E '/^ --> u?mount: .*/d') 1>&2 && rm /mnt/tmp.sh"
+    }],
+
+    "post-processors": [{
+        "type": "vagrant",
+        "output": "artixlinux-runit-{{.Provider}}.box"
+    }]
+}
