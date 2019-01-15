@@ -1,0 +1,6 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "voidlinux"
+  config.vm.provision "shell", path: "provision/permissions.sh"
+  config.vm.provision "shell", path: "provision/dracut.sh"
+  config.vm.provision "shell", path: "provision/locale.sh"
+end
