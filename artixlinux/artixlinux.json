@@ -1,6 +1,7 @@
 {
     "variables": {
-        "version": "openrc-20181013",
+        "version": "20181013",
+        "init": "openrc",
         "boot": "90s"
     },
 
@@ -8,7 +9,7 @@
         "type": "virtualbox-iso",
         "guest_os_type": "ArchLinux_64",
         "guest_additions_mode": "disable",
-        "iso_url": "https://download.artixlinux.org/iso/artix-base-{{user `version`}}-x86_64.iso",
+        "iso_url": "https://download.artixlinux.org/iso/artix-base-{{user `init`}}-{{user `version`}}-x86_64.iso",
         "iso_checksum_url": "https://download.artixlinux.org/iso/sha256sums",
         "iso_checksum_type": "sha256",
         "headless": "true",
@@ -16,7 +17,9 @@
             "<down><down><enter><wait{{user `boot`}}>",
             "root<enter><wait>artix<enter><wait>",
             "echo PermitRootLogin yes >> /etc/ssh/sshd_config<enter><wait>",
-            "rc-service sshd start<enter><wait>"
+            "useradd -g nobody nobody<enter><wait>",
+            "[[ {{user `init`}} == openrc ]] && rc-service sshd start<enter><wait>",
+            "[[ {{user `init`}} == runit ]] && ln -s /etc/runit/sv/sshd /run/runit/service/<enter><wait>"
         ],
         "ssh_timeout": "1m",
         "ssh_username": "root",
@@ -26,24 +29,22 @@
 
     "provisioners": [{
         "type": "shell",
-        "scripts": [
-            "install/base.sh",
-            "install/base-openrc.sh"
-        ]
+        "script": "install/base.sh",
+        "environment_vars": "init={{user `init`}}"
     }, {
         "type": "shell",
         "scripts": [
             "install/grub.sh",
             "install/vagrant.sh",
-            "install/vagrant-openrc.sh",
             "install/virtualbox.sh",
             "install/pacman.sh"
         ],
+        "environment_vars": "init={{user `init`}}",
         "execute_command": "set -o pipefail; cp {{.Path}} /mnt/tmp.sh && ({{.Vars}} artools-chroot /mnt /tmp.sh 3>&1 1>/dev/null 2>&3 | sed -u -E '/^ --> u?mount: .*/d') 1>&2 && rm /mnt/tmp.sh"
     }],
 
     "post-processors": [{
         "type": "vagrant",
-        "output": "artixlinux-openrc-{{.Provider}}.box"
+        "output": "artixlinux-{{user `init`}}-{{.Provider}}.box"
     }]
 }
