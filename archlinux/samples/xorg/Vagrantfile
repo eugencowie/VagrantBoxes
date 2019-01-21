@@ -1,0 +1,8 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "archlinux"
+  config.vm.provider "virtualbox" do |v| v.gui = true end
+  config.vm.provision "shell", inline: "pacman --noconfirm --sync --refresh --sysupgrade > /dev/null"
+  config.vm.provision "shell", path: "provision/xorg.sh"
+  config.vm.provision "shell", path: "provision/twm.sh"
+  config.vm.provision "shell", inline: "systemctl --quiet restart getty@tty1"
+end
