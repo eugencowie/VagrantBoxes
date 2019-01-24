@@ -1,7 +1,4 @@
-#!/bin/bash
-
-set -e
-set -x
+#!/bin/bash -ex
 
 # https://wiki.archlinux.org/index.php/Installation_guide#Partition_the_disks
 parted --script /dev/sda mklabel msdos

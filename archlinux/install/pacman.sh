@@ -1,7 +1,4 @@
-#!/bin/bash
-
-set -e
-set -x
+#!/bin/bash -ex
 
 # https://wiki.archlinux.org/index.php/Mirrors#Enabling_a_specific_mirror
 echo 'Server = http://mirrors.kernel.org/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist

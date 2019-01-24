@@ -1,7 +1,4 @@
-#!/bin/bash
-
-set -e
-set -x
+#!/bin/bash -ex
 
 # https://wiki.archlinux.org/index.php/System_time#Time_zone
 timedatectl set-timezone Europe/London
