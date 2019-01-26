@@ -40,7 +40,7 @@
             "install/pacman.sh"
         ],
         "environment_vars": "init={{user `init`}}",
-        "execute_command": "set -o pipefail; cp {{.Path}} /mnt/tmp.sh && ({{.Vars}} artools-chroot /mnt /tmp.sh 3>&1 1>/dev/null 2>&3 | sed -u -E '/^ --> u?mount: .*/d') 1>&2 && rm /mnt/tmp.sh"
+        "execute_command": "cp {{.Path}} /mnt/tmp.sh && {{.Vars}} artools-chroot /mnt /tmp.sh 2> >(sed -u -E '/^ --> u?mount: .*/d') && rm /mnt/tmp.sh"
     }],
 
     "post-processors": [{
