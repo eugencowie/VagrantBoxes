@@ -1,18 +1,11 @@
-#!/bin/bash
+#!/bin/bash -ex
 
-set -e
-set -x
-
-# https://linux.die.net/man/8/sfdisk
-echo '
+# https://wiki.voidlinux.org/Installation_via_chroot#Partitioning_and_formatting
+cat << 'END' | sfdisk --quiet /dev/sda
   label: dos
   - - L *
-' | sfdisk --quiet /dev/sda
-
-# https://wiki.voidlinux.org/Disks#Filesystems
+END
 mkfs.ext4 -q /dev/sda1
-
-# https://wiki.voidlinux.org/Disks#Filesystems
 mount /dev/sda1 /mnt
 
 # https://wiki.voidlinux.org/Installation_on_UEFI,_via_chroot#Installing_Void
@@ -23,9 +16,9 @@ yes | XBPS_ARCH="$arch" xbps-install --yes --sync -R "${mirror:-http://alpha.us.
 echo "UUID=$(blkid --match-tag UUID --output value /dev/sda1) / ext4 defaults 0 1" >> /mnt/etc/fstab
 
 # https://wiki.voidlinux.org/Installation_via_chroot#Mounting_system_directories
-mount --rbind --make-rslave /dev  /mnt/dev
-mount --rbind --make-rslave /proc /mnt/proc
-mount --rbind --make-rslave /sys  /mnt/sys
+mount --types proc /proc /mnt/proc
+mount --rbind --make-rslave /sys /mnt/sys
+mount --rbind --make-rslave /dev /mnt/dev
 
 # https://wiki.voidlinux.org/Installation_on_UEFI,_via_chroot#Installing_Void
-cp /etc/resolv.conf /mnt/etc/resolv.conf
+cp --dereference /etc/resolv.conf /mnt/etc/resolv.conf
