@@ -23,7 +23,7 @@ ln --symbolic --force /run/runit/supervise.dhcpcd-eth0 /etc/sv/dhcpcd-eth0/super
 ln --symbolic /etc/sv/dhcpcd-eth0 /etc/runit/runsvdir/default/
 
 # https://www.vagrantup.com/docs/boxes/base.html#ssh-tweaks
-sed --in-place '/#UseDNS no/s/^#//' /etc/ssh/sshd_config
+sed --in-place '|#UseDNS no|s|^#||' /etc/ssh/sshd_config
 ln --symbolic /etc/sv/sshd /etc/runit/runsvdir/default/
 
 # https://www.vagrantup.com/docs/boxes/base.html#quot-vagrant-quot-user

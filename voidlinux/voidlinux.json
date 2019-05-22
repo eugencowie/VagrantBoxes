@@ -22,7 +22,7 @@
     "provisioners": [{
         "type": "shell",
         "script": "install/base.sh",
-        "environment_vars": ["mirror={{user `mirror`}}", "arch={{user `arch`}}"]
+        "environment_vars": ["arch={{user `arch`}}", "mirror={{user `mirror`}}"]
     }, {
         "type": "shell",
         "scripts": [
