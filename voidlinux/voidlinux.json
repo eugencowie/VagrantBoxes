@@ -1,7 +1,7 @@
 {
     "variables": {
-        "mirror": "http://alpha.us.repo.voidlinux.org",
-        "version": "20181111",
+        "mirror": "https://alpha.de.repo.voidlinux.org",
+        "version": "20191109",
         "arch": "x86_64"
     },
 
@@ -10,7 +10,7 @@
         "guest_os_type": "Linux_64",
         "guest_additions_mode": "disable",
         "iso_url": "{{user `mirror`}}/live/{{user `version`}}/void-live-{{user `arch`}}-{{user `version`}}.iso",
-        "iso_checksum_url": "{{user `mirror`}}/live/{{user `version`}}/sha256sums.txt",
+        "iso_checksum_url": "{{user `mirror`}}/live/{{user `version`}}/sha256.txt",
         "iso_checksum_type": "sha256",
         "headless": "true",
         "ssh_timeout": "1m",
